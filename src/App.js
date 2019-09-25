@@ -17,12 +17,19 @@ class App extends React.Component {
   }
   dropHandler = (ev, droppedBox) => {
     const draggedBoxId = ev.dataTransfer.getData('text');
-    const boxes = [ ...this.state.boxes];
-    const draggedIndex = boxes.indexOf(boxes.filter(box => box.text.toString() === draggedBoxId).shift());
-    const droppedIndex = boxes.indexOf(droppedBox);
-    boxes[droppedIndex] = {...boxes[draggedIndex]};
-    boxes[draggedIndex] = {...droppedBox};
-    this.setState({boxes});
+    const draggedBox = this.state.boxes.filter(box => box.text.toString() === draggedBoxId).shift();
+    if (!draggedBox) {
+      return;
+    }
+    this.setState(state => ({
+      boxes: state.boxes.map(box => {
+        switch(box.text) {
+          case draggedBox.text: return droppedBox;
+          case droppedBox.text: return draggedBox;
+          default: return box;
+        }
+      })
+    }));
   }
   render() {
     return (
@@ -36,9 +43,9 @@ class App extends React.Component {
     );
   }
   getRandomColor() {
-    const hexaValues = '0123456789ABCDEF';
-    return [...Array(6).keys()]
-            .reduce((color) => color + hexaValues[Math.floor(Math.random() * 16)], '#');
+    const rgb = [...Array(3).keys()]
+            .map(_ => Math.floor(Math.random() * 256));
+    return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]}`;
   }
 }
 

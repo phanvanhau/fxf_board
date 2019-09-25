@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 
 class BoxComponent extends Component {
   render() {
+    const box = this.props.box;
     return (
-      <div draggable="true" className="board-box" style={{backgroundColor: this.props.box.color}}
-        onDragStart={(e) => this.props.dragStart(e, this.props.box)}
-        onDrop={(e) => this.props.drop(e, this.props.box)}
-        onDragOver={this.allowDrop}
+      <div draggable="true" className="board-box" style={{backgroundColor: box.color}}
+        onDragStart={(e) => this.props.dragStart(e, box)}
+        onDrop={(e) => this.props.drop(e, box)}
+        onDragOver={this.allowDrop} data-testid={`boxItem${box.text}`}
       >
-        {this.props.box.text}
+        {box.text}
       </div>
     );
   }
