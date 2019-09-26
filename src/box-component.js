@@ -4,10 +4,10 @@ class BoxComponent extends Component {
   render() {
     const box = this.props.box;
     return (
-      <div draggable="true" className="board-box" style={{backgroundColor: box.color}}
+      <div draggable="true" style={{backgroundColor: box.color}}
         onDragStart={(e) => this.props.dragStart(e, box)}
         onDrop={(e) => this.props.drop(e, box)}
-        onDragOver={this.allowDrop} data-testid={`boxItem${box.text}`}
+        onDragOver={this.allowDrop} data-testid={`boxItem${box.id}`}
       >
         {box.text}
       </div>
