@@ -23,18 +23,18 @@ describe('box component test', () => {
     const div = document.createElement('div');
     const { getByTestId } = render(
       <div>
-        <BoxComponent box={boxPros1} dragStart={dragStartMock} drop={dropMock}/>
-        <BoxComponent box={boxPros2} dragStart={dragStartMock} drop={dropMock}/>
+        <BoxComponent box={boxPros1} dragStart={dragStartMock} drop={dropMock} index="0"/>
+        <BoxComponent box={boxPros2} dragStart={dragStartMock} drop={dropMock} index="1"/>
       </div>, div);
     const elem1 = getByTestId('boxItem1');
     const elem2 = getByTestId('boxItem2');
     fireEvent.dragStart(elem1);
     expect(dragStartMock).toHaveBeenCalled();
     expect(dragStartMock.mock.calls.length).toEqual(1);
-    expect(dragStartMock.mock.calls[0][1]).toEqual(boxPros1);
+    expect(dragStartMock.mock.calls[0][1]).toEqual('0');
     fireEvent.drop(elem2);
     expect(dropMock).toHaveBeenCalled();
     expect(dropMock.mock.calls.length).toEqual(1);
-    expect(dropMock.mock.calls[0][1]).toEqual(boxPros2);
+    expect(dropMock.mock.calls[0][1]).toEqual('1');
   });
 });

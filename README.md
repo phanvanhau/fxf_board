@@ -28,7 +28,10 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## Learn More
+## Referenes
+
+## Redux
+https://redux.js.org <br>
 
 ## Testing
 https://reactjs.org/docs/test-utils.html <br>

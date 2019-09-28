@@ -47,19 +47,16 @@ it('start dragging on one box', () => {
   const renderedBoxes = container.querySelectorAll('.board-box div[draggable="true"]');
   const mockDataTransfer = {setData: jest.fn()};
   ReactTestUtils.Simulate.dragStart(renderedBoxes[0], {dataTransfer: mockDataTransfer});
-  expect(mockDataTransfer.setData).toHaveBeenCalledWith('text', 1);
+  expect(mockDataTransfer.setData).toHaveBeenCalledWith('text', 0);
 });
 
 it('dropping the dragged box onto another box', () => {
+  const swapMock = jest.fn();
   act(() => {
-    ReactDOM.render(<Board boxes={boxes}/>, container);
+    ReactDOM.render(<Board boxes={boxes} swap={swapMock}/>, container);
   });
   const renderedBoxes = container.querySelectorAll('.board-box div[draggable="true"]');
-  const mockDataTransfer = {getData: jest.fn().mockReturnValue('1')};
+  const mockDataTransfer = {getData: jest.fn().mockReturnValue(0)};
   ReactTestUtils.Simulate.drop(renderedBoxes[2], {dataTransfer: mockDataTransfer});
-  const newRenderedBoxes = container.querySelectorAll('.board-box div[draggable="true"]');
-  expect(newRenderedBoxes).toHaveLength(3);
-  expect(renderedBoxes[0].textContent).toEqual('box 3');
-  expect(renderedBoxes[1].textContent).toEqual('box 2');
-  expect(renderedBoxes[2].textContent).toEqual('box 1');
+  expect(swapMock).toHaveBeenCalledWith(0, 2);
 });
